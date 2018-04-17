@@ -5,7 +5,7 @@ import model.validation.Notification;
 
 public interface AuthenticationService {
 
-    Notification<Boolean> register(String username, String password);
+    Notification<Boolean> register(String username, String password, Integer admin);
 
     Notification<User> login(String username, String password);
 

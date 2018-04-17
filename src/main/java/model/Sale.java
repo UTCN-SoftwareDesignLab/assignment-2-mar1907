@@ -26,8 +26,10 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(Integer quantity, User user, Book book) {
+    public Sale(Integer quantity, Integer price, Date date, User user, Book book) {
         this.quantity = quantity;
+        this.price = price;
+        this.date = date;
         this.user = user;
         this.book = book;
     }

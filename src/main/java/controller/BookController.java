@@ -16,7 +16,7 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping(path = "/get")
+    @GetMapping(path = "/add")
     public @ResponseBody String addNewBook(@RequestParam String title,
                                    @RequestParam String author,
                                    @RequestParam String genre,
@@ -24,6 +24,23 @@ public class BookController {
                                    @RequestParam int price){
         bookService.save(title,author,genre,quantity,price);
         return "Saved";
+    }
+
+    @GetMapping(path = "/update")
+    public @ResponseBody String updateBook(@RequestParam long id,
+                                   @RequestParam String title,
+                                   @RequestParam String author,
+                                   @RequestParam String genre,
+                                   @RequestParam int quantity,
+                                   @RequestParam int price){
+        bookService.update(id,title,author,genre,quantity,price);
+        return "Updated";
+    }
+
+    @GetMapping(path = "/delete")
+    public @ResponseBody String deleteBook(@RequestParam long id){
+        bookService.delete(id);
+        return "Deleted";
     }
 
     @GetMapping(path="/all")

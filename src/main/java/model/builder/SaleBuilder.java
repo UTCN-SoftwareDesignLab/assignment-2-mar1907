@@ -4,6 +4,8 @@ import model.Book;
 import model.Sale;
 import model.User;
 
+import java.sql.Date;
+
 public class SaleBuilder {
 
     private Sale sale;
@@ -24,6 +26,16 @@ public class SaleBuilder {
 
     public SaleBuilder setBook(Book book){
         sale.setBook(book);
+        return this;
+    }
+
+    public SaleBuilder setPrice(int price){
+        sale.setPrice(price);
+        return this;
+    }
+
+    public SaleBuilder setDate(Date date){
+        sale.setDate(date);
         return this;
     }
 

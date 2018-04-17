@@ -10,6 +10,11 @@ public class UserBuilder {
         user = new User();
     }
 
+    public UserBuilder setId(long id){
+        user.setId(id);
+        return this;
+    }
+
     public UserBuilder setName(String name){
         user.setUsername(name);
         return this;

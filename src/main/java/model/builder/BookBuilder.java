@@ -10,6 +10,11 @@ public class BookBuilder {
         book = new Book();
     }
 
+    public BookBuilder setId(long id){
+        book.setId(id);
+        return this;
+    }
+
     public BookBuilder setTitle(String title){
         book.setTitle(title);
         return this;

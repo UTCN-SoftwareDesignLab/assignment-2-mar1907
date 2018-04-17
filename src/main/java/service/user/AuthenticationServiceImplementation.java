@@ -22,11 +22,11 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     }
 
     @Override
-    public Notification<Boolean> register(String username, String password) {
+    public Notification<Boolean> register(String username, String password, Integer admin) {
         User user = new UserBuilder()
                 .setName(username)
                 .setPassword(password)
-                .setAdmin(0)
+                .setAdmin(admin)
                 .build();
 
         UserValidator validator = new UserValidator(user);

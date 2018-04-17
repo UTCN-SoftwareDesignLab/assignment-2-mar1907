@@ -1,7 +1,9 @@
 package service.user;
 
 import model.User;
+import model.builder.UserBuilder;
 import model.validation.Notification;
+import model.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.user.UserRepository;
@@ -10,10 +12,11 @@ import repository.user.UserRepository;
 public class UserServiceImplementation implements UserService {
 
     private UserRepository userRepository;
+    private AuthenticationService authenticationService;
 
-    @Autowired
-    public UserServiceImplementation(UserRepository userRepository) {
+    public UserServiceImplementation(UserRepository userRepository, AuthenticationService authenticationService) {
         this.userRepository = userRepository;
+        this.authenticationService = authenticationService;
     }
 
     @Override
@@ -23,16 +26,39 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public Notification<Boolean> addUser(String username, String password, Integer admin) {
-        return null;
+        return authenticationService.register(username,password,admin);
     }
 
     @Override
     public Notification<Boolean> updateUser(long id, String username, String password, Integer admin) {
-        return null;
+        User user = new UserBuilder()
+                .setId(id)
+                .setName(username)
+                .setPassword(password)
+                .build();
+
+        UserValidator validator = new UserValidator(user);
+        boolean userValid = validator.validate();
+        Notification<Boolean> notification = new Notification<>();
+
+        if(!userValid){
+            validator.getErrors().forEach(notification::addError);
+            notification.setResult(Boolean.FALSE);
+            return notification;
+        } else {
+            user.setPassword(authenticationService.encodePassword(password));
+            userRepository.save(user);
+            notification.setResult(Boolean.TRUE);
+            return notification;
+        }
     }
 
     @Override
     public Notification<Boolean> delete(long id) {
-        return null;
+        User user = new UserBuilder().setId(id).build();
+        userRepository.delete(user);
+        Notification<Boolean> notification = new Notification<>();
+        notification.setResult(Boolean.TRUE);
+        return notification;
     }
 }
