@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "sale")
@@ -10,6 +11,8 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer quantity;
+    private Integer price;
+    private Date date;
 
 
     @ManyToOne
@@ -59,5 +62,21 @@ public class Sale {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }
