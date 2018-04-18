@@ -8,5 +8,5 @@ public interface SaleService {
     //sale needs to know the registered user
     void saveUser(User user);
 
-    Notification<Boolean> sell(long bookId, int quantity);
+    Notification<Integer> sell(long bookId, int quantity);
 }

@@ -32,19 +32,19 @@ public class SaleServiceImplementation implements SaleService {
     }
 
     @Override
-    public Notification<Boolean> sell(long bookId, int quantity) {
+    public Notification<Integer> sell(long bookId, int quantity) {
         Optional<Book> optBook = bookRepository.findById(bookId);
-        Notification<Boolean> notification = new Notification<>();
+        Notification<Integer> notification = new Notification<>();
         if(!optBook.isPresent()){
             notification.addError("No such book!");
-            notification.setResult(Boolean.FALSE);
+            notification.setResult(0);
             return notification;
         }
 
         Book book = optBook.get();
         if(book.getQuantity()<quantity){
             notification.addError("Not enough books in stock");
-            notification.setResult(Boolean.FALSE);
+            notification.setResult(0);
             return notification;
         }
 
@@ -61,7 +61,7 @@ public class SaleServiceImplementation implements SaleService {
         book.setQuantity(book.getQuantity()-quantity);
         bookRepository.save(book);
 
-        notification.setResult(Boolean.TRUE);
+        notification.setResult(price);
         return notification;
     }
 }

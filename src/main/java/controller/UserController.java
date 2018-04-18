@@ -1,6 +1,7 @@
 package controller;
 
 import model.Book;
+import model.validation.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET, params = {"action"})
-    public String login(@RequestParam String val, @RequestParam String action, Model model) {
+    public String search(@RequestParam String val, @RequestParam String action, Model model) {
         switch (action){
             case "titles":
                 model.addAttribute("searchResult",searchService.searchByTitle(val));
@@ -42,6 +43,18 @@ public class UserController {
                 model.addAttribute("searchResult",searchService.searchByGenre(val));
                 break;
         }
+        return "user";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.POST, params = "action=sell")
+    public String sell(@RequestParam int bid, @RequestParam int quantity, Model model){
+        Notification<Integer> notification = saleService.sell(bid,quantity);
+        if(notification.hasErrors()){
+            model.addAttribute("saleResult",notification.getFormattedErrors());
+        } else {
+            model.addAttribute("saleResult","Sale succesful, price: " + notification.getResult()+"");
+        }
+
         return "user";
     }
 }
