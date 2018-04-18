@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import service.sale.SaleService;
 import service.user.AuthenticationService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
@@ -28,7 +31,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, params = "action=login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpSession httpSession) {
         User user;
         Notification<User> notification = authenticationService.login(username,password);
         if(notification.hasErrors()){
@@ -36,7 +39,7 @@ public class LoginController {
             return "redirect:/login?error";
         } else {
             user = notification.getResult();
-            saleService.saveUser(user);
+            httpSession.setAttribute("user",user);
             if(user.getIsAdmin()==1){
                 return "redirect:admin";
             } else {

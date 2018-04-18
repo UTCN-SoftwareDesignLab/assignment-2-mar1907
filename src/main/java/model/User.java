@@ -53,4 +53,8 @@ public class User {
     public void setIsAdmin(Integer isAdmin) {
         this.isAdmin = isAdmin;
     }
+
+    public String toString(){
+        return id + " " + username + " " + (isAdmin==1?"admin":"user");
+    }
 }

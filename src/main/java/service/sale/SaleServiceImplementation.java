@@ -4,6 +4,7 @@ import model.Book;
 import model.Sale;
 import model.User;
 import model.builder.SaleBuilder;
+import model.builder.UserBuilder;
 import model.validation.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,6 @@ import java.util.Optional;
 @Service
 public class SaleServiceImplementation implements SaleService {
 
-    private User user;
     private SaleRepository saleRepository;
     private BookRepository bookRepository;
 
@@ -27,12 +27,8 @@ public class SaleServiceImplementation implements SaleService {
     }
 
     @Override
-    public void saveUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public Notification<Integer> sell(long bookId, int quantity) {
+    public Notification<Integer> sell(long bookId, int quantity, long userId) {
+        User user = new UserBuilder().setId(userId).build();
         Optional<Book> optBook = bookRepository.findById(bookId);
         Notification<Integer> notification = new Notification<>();
         if(!optBook.isPresent()){

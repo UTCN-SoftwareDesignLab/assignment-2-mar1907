@@ -35,6 +35,7 @@ public class UserServiceImplementation implements UserService {
                 .setId(id)
                 .setName(username)
                 .setPassword(password)
+                .setAdmin(admin)
                 .build();
 
         UserValidator validator = new UserValidator(user);
