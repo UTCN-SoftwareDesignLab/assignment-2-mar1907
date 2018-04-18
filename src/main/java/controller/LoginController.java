@@ -1,12 +1,14 @@
 package controller;
 
+import model.User;
+import model.validation.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import service.sale.SaleService;
 import service.user.AuthenticationService;
 
@@ -25,8 +27,38 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody String login(@RequestParam String username, @RequestParam String password) {
-        return username+password;
+    @RequestMapping(value = "/login", method = RequestMethod.POST, params = "action=login")
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+        User user;
+        Notification<User> notification = authenticationService.login(username,password);
+        if(notification.hasErrors()){
+            model.addAttribute("registerText",notification.getFormattedErrors());
+            return "redirect:/login?error";
+        } else {
+            user = notification.getResult();
+            saleService.saveUser(user);
+            if(user.getIsAdmin()==1){
+                return "redirect:admin";
+            } else {
+                return "redirect:user";
+            }
+        }
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST, params = "action=register")
+    public String register(@RequestParam String username, @RequestParam String password, Model model) {
+        Notification<Boolean> notification = authenticationService.register(username,password,0);
+        if(notification.hasErrors()){
+            model.addAttribute("registerText",notification.getFormattedErrors());
+        } else {
+            if(!notification.getResult()){
+                model.addAttribute("registerText","Could not register, try again later");
+            }
+            else {
+                model.addAttribute("registerText","Registered!");
+            }
+        }
+
+        return "login";
     }
 }

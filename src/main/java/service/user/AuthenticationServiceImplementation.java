@@ -53,7 +53,7 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
             userNotification.setResult(optionalUser.get());
             return userNotification;
         } else {
-            userNotification.addError("No such user");
+            userNotification.addError("Invalid username or password");
             return userNotification;
         }
     }
