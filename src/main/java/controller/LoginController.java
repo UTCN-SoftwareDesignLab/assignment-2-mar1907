@@ -24,9 +24,16 @@ public class LoginController {
     @Autowired
     private SaleService saleService;
 
+    @RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+    @Order(value = 1)
+    public String home() {
+        return "redirect:/login";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @Order(value = 1)
-    public String index() {
+    public String index(HttpSession session) {
+        session.setAttribute("user",null);
         return "login";
     }
 

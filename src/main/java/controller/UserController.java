@@ -32,6 +32,13 @@ public class UserController {
         return "user";
     }
 
+    @RequestMapping(value = "/user/logout", method = RequestMethod.GET)
+    @Order(value = 1)
+    public String logout()
+    {
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/user", method = RequestMethod.GET, params = {"action"})
     public String search(@RequestParam String val, @RequestParam String action, Model model) {
         switch (action){

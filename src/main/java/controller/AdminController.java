@@ -29,6 +29,13 @@ public class AdminController {
         return "admin";
     }
 
+    @RequestMapping(value = "/admin/logout", method = RequestMethod.GET)
+    @Order(value = 1)
+    public String logout()
+    {
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
     @Order(value = 1)
     public String usersIndex()
