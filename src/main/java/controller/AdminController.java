@@ -15,6 +15,7 @@ import repository.report.ReportRepository;
 import repository.report.ReportRepositoryFactory;
 import service.recommendation.RecommendationService;
 import service.report.ReportService;
+import service.sale.SaleService;
 import service.search.SearchService;
 import service.user.UserService;
 
@@ -40,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private RecommendationService<Book> recommendationService;
+
+    @Autowired
+    private SaleService saleService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     @Order(value = 1)
@@ -127,6 +131,9 @@ public class AdminController {
         if(!isLogged(session)){
             return "redirect:/";
         }
+
+        saleService.deleteByUserId(uid);
+
         Notification<Boolean> notification = userService.delete(uid);
         if(notification.hasErrors()){
             model.addAttribute("result",notification.getFormattedErrors());
@@ -242,6 +249,8 @@ public class AdminController {
         if(!isLogged(session)){
             return "redirect:/";
         }
+
+        saleService.deleteByBookId(bid);
 
         Notification<Boolean> notification = bookService.delete(bid);
         if(notification.hasErrors()){

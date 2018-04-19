@@ -60,4 +60,14 @@ public class SaleServiceImplementation implements SaleService {
         notification.setResult(price);
         return notification;
     }
+
+    @Override
+    public void deleteByUserId(long userId) {
+        saleRepository.deleteByUser_Id(userId);
+    }
+
+    @Override
+    public void deleteByBookId(long bookId) {
+        saleRepository.deleteByBook_Id(bookId);
+    }
 }
