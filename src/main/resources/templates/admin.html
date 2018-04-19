@@ -9,7 +9,20 @@
     <br>
     <a href="/admin/books">Manage books</a>
     <br>
-    <a href="/admin/reports">Generate reports</a>
+    <form action="#" data-th-action="@{/admin/}" method="get" class="form-horizontal col-sm-6 col-sm-offset-3">
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="PDF">Generate PDF report</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="CSV">Generate CSV report</button>
+            </div>
+        </div>
+    </form>
+    <br>
+    <p th:text="${report}" />
     <br>
     <a href="/admin/logout">Logout</a>
 </body>

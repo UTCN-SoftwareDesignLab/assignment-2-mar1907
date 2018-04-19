@@ -1,7 +1,6 @@
-package service.report;
+package repository.report;
 
 import model.Book;
-import model.builder.BookBuilder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -9,11 +8,9 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class ReportServicePDFBox implements ReportService {
+public class ReportRepositoryPDFBox implements ReportRepository {
 
     @Override
     public void createReport(List<Book> books) {
@@ -30,7 +27,7 @@ public class ReportServicePDFBox implements ReportService {
             contentStream.setFont(font,12);
             contentStream.moveTextPositionByAmount( 100, 700 );
             contentStream.setLeading(14.5f);
-            contentStream.drawString("Title Author Genre Price");
+            contentStream.drawString("Id Title Author Genre Price");
             contentStream.newLine();
             for(int i = 0; i < books.size(); i++){
                 if(i%43==0&&i>0){

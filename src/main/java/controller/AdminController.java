@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import service.book.BookService;
+import repository.report.ReportRepository;
+import repository.report.ReportRepositoryFactory;
+import service.report.ReportService;
 import service.user.UserService;
 
 import javax.servlet.http.HttpSession;
+
+import static constants.Constants.ReportTypes.CSV;
+import static constants.Constants.ReportTypes.PDFBOX;
 
 @Controller
 public class AdminController {
@@ -22,6 +28,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReportService reportService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     @Order(value = 1)
@@ -117,6 +126,18 @@ public class AdminController {
         }
 
         return "manage-users";
+    }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET, params = {"action"})
+    public String generateReports(Model model, @RequestParam String action, HttpSession session) {
+        if(!isLogged(session)){
+            return "redirect:/";
+        }
+
+        reportService.createReport(action);
+        model.addAttribute("report",action + " report generated!");
+
+        return "admin";
     }
 
     private boolean isLogged(HttpSession session){
