@@ -62,12 +62,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST, params = "action=sell")
-    public String sell(@RequestParam int bid, @RequestParam int quantity, Model model, HttpSession session){
+    public String sell(@RequestParam String bid, @RequestParam String quantity, Model model, HttpSession session){
         if(!isLogged(session)){
             return "redirect:/";
         }
+
+        int id;
+
+        try {
+            id = Integer.parseInt(bid);
+        } catch (NumberFormatException e){
+            model.addAttribute("saleResult","Invalid id format!");
+            return "user";
+        }
+
+        int bquantity;
+
+        try {
+            bquantity = Integer.parseInt(quantity);
+        } catch (NumberFormatException e){
+            model.addAttribute("saleResult","Invalid quantity format!");
+            return "user";
+        }
+
         User user = ((User)session.getAttribute("user"));
-        Notification<Integer> notification = saleService.sell(bid,quantity,user.getId());
+        Notification<Integer> notification = saleService.sell(id,bquantity,user.getId());
         if(notification.hasErrors()){
             model.addAttribute("saleResult",notification.getFormattedErrors());
         } else {
