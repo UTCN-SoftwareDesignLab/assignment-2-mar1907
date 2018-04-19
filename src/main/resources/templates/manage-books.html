@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage books</title>
+</head>
+<body>
+    <form action="#" data-th-action="@{/admin/books}" method="get" class="form-horizontal col-sm-6 col-sm-offset-3">
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="books">View all</button>
+            </div>
+        </div>
+    </form>
+    <tbody>
+        <tr th:each="book: ${books}">
+            <td th:text="${book}" />
+            <br>
+        </tr>
+    </tbody>
+    <form action="#" data-th-action="@{/admin/books}" method="get" class="form-horizontal col-sm-6 col-sm-offset-3">
+        <div class="form-group">
+            <label for="title" class="col-sm-4 control-label">Title:</label>
+            <div class="col-sm-8">
+                <input type="text" name="title" id="title" class="form-control"/>
+            </div>
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="search">Google Search</button>
+            </div>
+        </div>
+    </form>
+    <tbody>
+        <tr th:each="book, iter: ${booksFound}">
+            <td th:text="${iter.index}"/>
+            <td th:text="${book.title}" />
+            ;
+            <td th:text="${book.author}" />
+            ;
+            <td th:text="${book.genre}" />
+            <br>
+        </tr>
+    </tbody>
+    <p th:text="${searchResult}" />
+    <form action="#" data-th-action="@{/admin/books}" method="post" class="form-horizontal col-sm-6 col-sm-offset-3">
+        <div class="form-group">
+            <label for="bid" class="col-sm-4 control-label">Id:</label>
+            <div class="col-sm-8">
+                <input type="text" name="bid" id="bid" class="form-control"/>
+            </div>
+            <label for="btitle" class="col-sm-4 control-label">Title:</label>
+            <div class="col-sm-8">
+                <input type="text" name="btitle" id="btitle" class="form-control"/>
+            </div>
+            <label for="bauthor" class="col-sm-4 control-label">Author:</label>
+            <div class="col-sm-8">
+                <input type="text" name="bauthor" id="bauthor" class="form-control"/>
+            </div>
+            <label for="bgenre" class="col-sm-4 control-label">Genre:</label>
+            <div class="col-sm-8">
+                <input type="text" name="bgenre" id="bgenre" class="form-control"/>
+            </div>
+            <label for="bprice" class="col-sm-4 control-label">Price:</label>
+            <div class="col-sm-8">
+                <input type="text" name="bprice" id="bprice" class="form-control"/>
+            </div>
+            <label for="bquantity" class="col-sm-4 control-label">Quantity:</label>
+            <div class="col-sm-8">
+                <input type="text" name="bquantity" id="bquantity" class="form-control"/>
+            </div>
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="createSearch">Create from search result</button>
+            </div>
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="create">Create</button>
+            </div>
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="update">Update</button>
+            </div>
+            <div class="col-sm-offset-4 col-sm-10">
+                <button class="btn btn-primary" type="submit" name="action" value="delete">Delete</button>
+            </div>
+        </div>
+    </form>
+    <p th:text="${result}" />
+</body>
+</html>

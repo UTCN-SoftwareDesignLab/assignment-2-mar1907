@@ -24,7 +24,12 @@
             </div>
         </div>
     </form>
-    <p th:text="${searchResult}" />
+    <tbody>
+    <tr th:each="book: ${books}">
+        <td th:text="${book}" />
+        <br>
+    </tr>
+    </tbody>
     <form action="#" data-th-action="@{/user}" method="post" class="form-horizontal col-sm-6 col-sm-offset-3">
         <div class="form-group">
             <label><b>Sale:</b></label>

@@ -12,7 +12,12 @@
             </div>
         </div>
     </form>
-    <p th:text="${viewAll}" />
+    <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user}" />
+            <br>
+        </tr>
+    </tbody>
     <form action="#" data-th-action="@{/admin/users}" method="post" class="form-horizontal col-sm-6 col-sm-offset-3">
         <div class="form-group">
             <label for="uid" class="col-sm-4 control-label">Id:</label>

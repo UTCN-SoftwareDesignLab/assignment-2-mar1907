@@ -48,9 +48,13 @@ public class GoogleRecommendationService implements RecommendationService<Book> 
             book.setTitle(volumeInfo.getTitle());
             if (volumeInfo.getAuthors() != null && !volumeInfo.getAuthors().isEmpty()) {
                 book.setAuthor(volumeInfo.getAuthors().get(0));
+            } else {
+                book.setAuthor("Unknown");
             }
             if (volumeInfo.getCategories() != null && !volumeInfo.getCategories().isEmpty()) {
                 book.setGenre(volumeInfo.getCategories().get(0));
+            } else {
+                book.setGenre("Unknown");
             }
             bookList.add(book);
         }

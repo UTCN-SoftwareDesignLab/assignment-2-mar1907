@@ -55,6 +55,6 @@ public class User {
     }
 
     public String toString(){
-        return id + " " + username + " " + (isAdmin==1?"admin":"user");
+        return id + "; " + username + "; " + (isAdmin==1?"admin":"user");
     }
 }

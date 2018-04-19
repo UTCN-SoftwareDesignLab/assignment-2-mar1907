@@ -49,13 +49,13 @@ public class UserController {
         }
         switch (action){
             case "titles":
-                model.addAttribute("searchResult",searchService.searchByTitle(val));
+                model.addAttribute("books",searchService.searchByTitle(val));
                 break;
             case "authors":
-                model.addAttribute("searchResult",searchService.searchByAuthor(val));
+                model.addAttribute("books",searchService.searchByAuthor(val));
                 break;
             case "genres":
-                model.addAttribute("searchResult",searchService.searchByGenre(val));
+                model.addAttribute("books",searchService.searchByGenre(val));
                 break;
         }
         return "user";
