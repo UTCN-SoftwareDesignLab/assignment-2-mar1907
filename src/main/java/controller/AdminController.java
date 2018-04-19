@@ -18,7 +18,7 @@ import service.user.UserService;
 import javax.servlet.http.HttpSession;
 
 import static constants.Constants.ReportTypes.CSV;
-import static constants.Constants.ReportTypes.PDFBOX;
+import static constants.Constants.ReportTypes.PDF;
 
 @Controller
 public class AdminController {
