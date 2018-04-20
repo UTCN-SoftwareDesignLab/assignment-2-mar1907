@@ -63,9 +63,6 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST, params = "action=sell")
     public String sell(@RequestParam String bid, @RequestParam String quantity, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
 
         int id;
 

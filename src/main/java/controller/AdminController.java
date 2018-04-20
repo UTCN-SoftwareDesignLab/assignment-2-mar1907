@@ -90,10 +90,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/users", method = RequestMethod.POST, params = "action=create")
-    public String create(@RequestParam String uname, @RequestParam String upass, @RequestParam boolean uadmin, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+    public String create(@RequestParam String uname, @RequestParam String upass, @RequestParam boolean uadmin, Model model){
         Notification<Boolean> notification = userService.addUser(uname,upass,uadmin?1:0);
         if(notification.hasErrors()){
             model.addAttribute("result",notification.getFormattedErrors());
@@ -106,10 +103,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/users", method = RequestMethod.POST, params = "action=update")
     public String update(@RequestParam String uid, @RequestParam String uname, @RequestParam String upass,
-                         @RequestParam boolean uadmin, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+                         @RequestParam boolean uadmin, Model model){
 
         int id;
 
@@ -131,10 +125,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/users", method = RequestMethod.POST, params = "action=delete")
-    public String delete(@RequestParam String uid, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+    public String delete(@RequestParam String uid, Model model){
 
         int id;
 
@@ -197,10 +188,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/books", method = RequestMethod.POST, params = "action=createSearch")
     public String createSearchBook(@RequestParam String bid, @RequestParam String btitle, @RequestParam String bprice,
-                                   @RequestParam String bquantity, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+                                   @RequestParam String bquantity, Model model){
 
         int id, price, quantity;
 
@@ -245,10 +233,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/books", method = RequestMethod.POST, params = "action=create")
     public String createBook(@RequestParam String btitle,@RequestParam String bauthor,@RequestParam String bgenre,
-                             @RequestParam String bprice, @RequestParam String bquantity, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+                             @RequestParam String bprice, @RequestParam String bquantity, Model model){
 
         int price, quantity;
         try{
@@ -277,10 +262,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/books", method = RequestMethod.POST, params = "action=update")
     public String updateBook(@RequestParam String bid, @RequestParam String btitle,@RequestParam String bauthor,@RequestParam String bgenre,
-                             @RequestParam String bprice, @RequestParam String bquantity, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+                             @RequestParam String bprice, @RequestParam String bquantity, Model model){
 
         int id, price, quantity;
 
@@ -315,10 +297,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/books", method = RequestMethod.POST, params = "action=delete")
-    public String deleteBook(@RequestParam String bid, Model model, HttpSession session){
-        if(!isLogged(session)){
-            return "redirect:/";
-        }
+    public String deleteBook(@RequestParam String bid, Model model){
 
         int id;
 
