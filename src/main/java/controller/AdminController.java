@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import service.book.BookService;
 import service.recommendation.RecommendationService;
 import service.report.ReportService;
+import service.report.ReportServiceFactory;
 import service.sale.SaleService;
 import service.user.UserService;
 
@@ -31,7 +32,7 @@ public class AdminController {
     private UserService userService;
 
     @Autowired
-    private ReportService reportService;
+    private ReportServiceFactory reportServiceFactory;
 
     @Autowired
     private RecommendationService<Book> recommendationService;
@@ -154,7 +155,8 @@ public class AdminController {
             return "redirect:/";
         }
 
-        reportService.createReport(action);
+        ReportService reportService = reportServiceFactory.getReportService(action);
+        reportService.createReport();
         model.addAttribute("report",action + " report generated!");
 
         return "admin";

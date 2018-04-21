@@ -1,4 +1,4 @@
-package repository.report;
+package service.report;
 
 import model.Book;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -6,14 +6,29 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.beans.factory.annotation.Autowired;
+import repository.book.BookRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-public class ReportRepositoryPDFBox implements ReportRepository {
+public class ReportServicePDFBox implements ReportService {
+
+    private BookRepository bookRepository;
+
+    public ReportServicePDFBox(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @Override
-    public void createReport(List<Book> books) {
+    public void createReport() {
+        List<Book> books = StreamSupport.stream(bookRepository.findAll().spliterator(),false)
+                                .filter(b->b.getQuantity()==0)
+                                .collect(Collectors.toCollection(ArrayList::new));
+
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
         document.addPage(page);
@@ -27,7 +42,7 @@ public class ReportRepositoryPDFBox implements ReportRepository {
             contentStream.setFont(font,12);
             contentStream.moveTextPositionByAmount( 100, 700 );
             contentStream.setLeading(14.5f);
-            contentStream.drawString("Id Title Author Genre Price");
+            contentStream.drawString("Id; Title; Author; Genre; Price");
             contentStream.newLine();
             for(int i = 0; i < books.size(); i++){
                 if(i%43==0&&i>0){
@@ -40,11 +55,11 @@ public class ReportRepositoryPDFBox implements ReportRepository {
                     contentStream.setFont(font,12);
                     contentStream.moveTextPositionByAmount( 100, 700 );
                     contentStream.setLeading(14.5f);
-                    contentStream.drawString("Title Author Genre Price");
+                    contentStream.drawString("Title; Author; Genre; Price");
                     contentStream.newLine();
                 }
                 Book book = books.get(i);
-                String line = book.getId() + " " + book.getTitle()+" "+book.getAuthor()+" "+book.getGenre()+" "+book.getPrice();
+                String line = book.getId() + "; " + book.getTitle()+"; "+book.getAuthor()+"; "+book.getGenre()+"; "+book.getPrice();
                 contentStream.drawString(line);
                 contentStream.newLine();
             }
