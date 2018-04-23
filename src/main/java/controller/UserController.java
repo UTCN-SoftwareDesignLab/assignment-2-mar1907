@@ -47,7 +47,10 @@ public class UserController {
         if(!isLogged(session)){
             return "redirect:/";
         }
-        switch (action){
+
+        model.addAttribute("books",searchService.searchByTitleOrAuthorOrGenre(val,val,val));
+
+        /*switch (action){
             case "titles":
                 model.addAttribute("books",searchService.searchByTitle(val));
                 break;
@@ -57,7 +60,7 @@ public class UserController {
             case "genres":
                 model.addAttribute("books",searchService.searchByGenre(val));
                 break;
-        }
+        }*/
         return "user";
     }
 
