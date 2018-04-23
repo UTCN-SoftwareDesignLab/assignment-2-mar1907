@@ -4,7 +4,6 @@ import model.User;
 import model.builder.UserBuilder;
 import model.validation.Notification;
 import model.validation.UserValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.user.UserRepository;
 

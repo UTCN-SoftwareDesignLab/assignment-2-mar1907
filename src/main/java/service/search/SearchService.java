@@ -4,5 +4,5 @@ import model.Book;
 
 public interface SearchService {
 
-    public Iterable<Book> searchByTitleOrAuthorOrGenre(String term);
+    Iterable<Book> searchByTitleOrAuthorOrGenre(String term);
 }

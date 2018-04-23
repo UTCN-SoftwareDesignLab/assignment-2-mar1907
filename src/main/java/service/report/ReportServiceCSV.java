@@ -1,7 +1,6 @@
 package service.report;
 
 import model.Book;
-import org.springframework.beans.factory.annotation.Autowired;
 import repository.book.BookRepository;
 
 import java.io.FileWriter;
