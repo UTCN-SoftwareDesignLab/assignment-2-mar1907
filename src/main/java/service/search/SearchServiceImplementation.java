@@ -16,7 +16,7 @@ public class SearchServiceImplementation implements SearchService {
     }
 
     @Override
-    public Iterable<Book> searchByTitleOrAuthorOrGenre(String title, String author, String genre) {
-        return bookRepository.findBooksByTitleOrAuthorOrGenre(title,author,genre);
+    public Iterable<Book> searchByTitleOrAuthorOrGenre(String term) {
+        return bookRepository.findAllByQuery(term);
     }
 }

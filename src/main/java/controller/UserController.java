@@ -42,25 +42,14 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET, params = {"action"})
-    public String search(@RequestParam String val, @RequestParam String action, Model model, HttpSession session) {
+    @RequestMapping(value = "/user", method = RequestMethod.GET, params = {"action=search"})
+    public String search(@RequestParam String val, Model model, HttpSession session) {
         if(!isLogged(session)){
             return "redirect:/";
         }
 
-        model.addAttribute("books",searchService.searchByTitleOrAuthorOrGenre(val,val,val));
+        model.addAttribute("books",searchService.searchByTitleOrAuthorOrGenre(val));
 
-        /*switch (action){
-            case "titles":
-                model.addAttribute("books",searchService.searchByTitle(val));
-                break;
-            case "authors":
-                model.addAttribute("books",searchService.searchByAuthor(val));
-                break;
-            case "genres":
-                model.addAttribute("books",searchService.searchByGenre(val));
-                break;
-        }*/
         return "user";
     }
 
